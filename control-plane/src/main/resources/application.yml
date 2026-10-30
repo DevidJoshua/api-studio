@@ -1,0 +1,63 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: api-studio-control-plane
+  datasource:
+    # H2 in-memory agar zero-setup. Skema dikelola JPA (ddl-auto=update) dan
+    # mudah dipindah ke PostgreSQL: cukup ganti URL/driver + dialect.
+    url: jdbc:h2:mem:controlplane;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 30
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 40MB
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+apistudio:
+  # Bootstrap administrator pertama dan akun demo (Bagian 10.4 langkah 6).
+  bootstrap:
+    admin-username: ${APISTUDIO_ADMIN_USERNAME:admin}
+    admin-password: ${APISTUDIO_ADMIN_PASSWORD:admin123}
+    seed-demo: ${APISTUDIO_SEED_DEMO:true}
+  # Lokasi cache JAR library (FR-JAVA-04).
+  library-cache: ${java.io.tmpdir}/apistudio-libs
+  # Repository Maven; produksi harus memakai repository internal (Bagian 11).
+  maven-repositories: ${APISTUDIO_MAVEN_REPOS:https://repo1.maven.org/maven2}
+  cors:
+    allowed-origins: ${APISTUDIO_CORS_ORIGINS:*}
+  java:
+    max-libraries: 25
+    max-source-bytes: 200000
+  engine:
+    flow-timeout-ms: 30000
+    max-steps: 2000
+    max-trace-steps: 5000
+    sandbox-max-rows: 1000
+    sandbox-enabled: true
+  # Kunci enkripsi secret lokal; produksi memakai Vault/KMS (FR-SEC-02).
+  secrets:
+    local-key: ${APISTUDIO_SECRET_KEY:dev-only-change-me-32-bytes-key!}
+
+logging:
+  level:
+    io.apistudio: INFO
+    org.hibernate.SQL: WARN

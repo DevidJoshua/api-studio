@@ -1,0 +1,74 @@
+# ============================================================================
+#  .gitignore — Platform API Management Low-Code
+#  Aturan: artefak build, dependensi, rahasia, dan dokumen BRD tidak ikut Git.
+# ============================================================================
+
+# --------------------------------------------------------------- BRD / dokumen
+# Folder BRD beserta seluruh isinya dan file BRD di root tidak disertakan.
+brd/
+/BRD Platform API Management Low-Code.md
+*BRD*.md
+!**/CONTEXT.MD
+
+# ------------------------------------------------------------------------ Java
+target/
+*.class
+*.jar
+!**/maven-wrapper.jar
+
+# --------------------------------------------------------------------- Frontend
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+
+# Build info
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# ------------------------------------------------------------------------ IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+
+# ------------------------------------------------------------------------- OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------------------ Log
+*.log
+logs/
+npm-debug.log*
+
+# Runtime & proses
+*.pid
+
+# -------------------------------------------------------------- Environment
+# Rahasia tidak boleh masuk Git.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# ------------------------------------------------------------------- H2 / data
+*.db
+*.mv.db
+*.trace.db
+
+# ------------------------------------------------------- cache kompilasi lokal
+.apistudio-cache/
+apistudio-libs/
+apistudio-contract-cp/
+
+# ------------------------------------------------- artefak sementara pemeriksaan
+scripts/_yaml.check.mjs
